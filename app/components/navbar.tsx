@@ -28,6 +28,7 @@ const Navbar = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   const navVariants = {
     initial: {
       width: "100%",
@@ -63,9 +64,9 @@ const Navbar = () => {
       style={{
         position: "fixed",
         zIndex: 1000,
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "1fr auto 1fr",
         alignItems: "center",
-        justifyContent: "space-between",
         backdropFilter: isScrolled ? "blur(16px)" : "none",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "none",
         left: "50%",
@@ -94,6 +95,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
+      {/* Logo */}
       <Link
         href="/"
         style={{
@@ -117,6 +119,7 @@ const Navbar = () => {
         </span>
       </Link>
 
+      {/* Center nav links */}
       <ul
         className="hidden md:flex"
         style={{
@@ -126,6 +129,7 @@ const Navbar = () => {
           padding: 0,
           flexShrink: 0,
           whiteSpace: "nowrap",
+          justifyContent: "center",
         }}
       >
         {navLinks.map((item) => (
@@ -155,29 +159,18 @@ const Navbar = () => {
         ))}
       </ul>
 
+      {/* CTA */}
       <div
         className="hidden md:flex items-center"
-        style={{ gap: "8px", flexShrink: 0, whiteSpace: "nowrap" }}
+        style={{
+          gap: "8px",
+          flexShrink: 0,
+          whiteSpace: "nowrap",
+          justifyContent: "flex-end",
+        }}
       >
         <motion.a
-          href="#sample"
-          whileHover={{ color: "#086841" }}
-          style={{
-            padding: "6px 14px",
-            fontSize: "13.5px",
-            fontWeight: 500,
-            color: "#52525b",
-            textDecoration: "none",
-            fontFamily: "var(--font-body, Inter, sans-serif)",
-            letterSpacing: "-0.01em",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Sample report
-        </motion.a>
-
-        <motion.a
-          href="#audit"
+          href="/audit"
           whileHover={{
             backgroundColor: "#065733",
             boxShadow: "0 4px 16px rgba(8,104,65,0.28)",
@@ -201,6 +194,7 @@ const Navbar = () => {
         </motion.a>
       </div>
 
+      {/* Mobile hamburger */}
       <div className="flex md:hidden items-center">
         <motion.button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -223,6 +217,7 @@ const Navbar = () => {
         </motion.button>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -292,7 +287,7 @@ const Navbar = () => {
             />
 
             <a
-              href="#audit"
+              href="/audit"
               onClick={() => setIsMobileMenuOpen(false)}
               style={{
                 display: "block",
