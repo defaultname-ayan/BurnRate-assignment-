@@ -29,12 +29,13 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Original animation — full-width bar collapses into centred pill on scroll
   const navVariants = {
     initial: {
       width: "100%",
-      paddingLeft: "1.5rem",
-      paddingRight: "1.5rem",
-      height: "64px",
+      paddingLeft: "3rem",
+      paddingRight: "3rem",
+      height: "72px",
       borderRadius: "0px",
       backgroundColor: "rgba(245, 244, 240, 0.0)",
       border: "1px solid transparent",
@@ -72,7 +73,8 @@ const Navbar = () => {
           WebkitBackdropFilter: isScrolled ? "blur(16px)" : "none",
           left: "50%",
           transform: "translateX(-50%)",
-          maxWidth: "min(680px, 92vw)",
+          overflow: "visible",
+          maxWidth: "90vw",
         }}
       >
         <AnimatePresence>
@@ -85,8 +87,8 @@ const Navbar = () => {
               style={{
                 position: "absolute",
                 bottom: 0,
-                left: "1.5rem",
-                right: "1.5rem",
+                left: "3rem",
+                right: "3rem",
                 height: "1px",
                 background:
                   "linear-gradient(90deg, transparent, rgba(8,104,65,0.15), transparent)",
@@ -103,6 +105,7 @@ const Navbar = () => {
             alignItems: "center",
             textDecoration: "none",
             flexShrink: 0,
+            whiteSpace: "nowrap",
           }}
         >
           <span
@@ -124,15 +127,17 @@ const Navbar = () => {
           style={{
             listStyle: "none",
             gap: "2px",
-            margin: 0,
+            margin: "0 auto",
             padding: 0,
+            flexShrink: 0,
+            whiteSpace: "nowrap",
             position: "absolute",
             left: "50%",
             transform: "translateX(-50%)",
           }}
         >
           {navLinks.map((item) => (
-            <li key={item.label}>
+            <li key={item.label} style={{ flexShrink: 0 }}>
               <motion.a
                 href={item.href}
                 whileHover={{
@@ -159,7 +164,10 @@ const Navbar = () => {
         </ul>
 
         {/* CTA — desktop only */}
-        <div className="hidden md:flex items-center" style={{ gap: "8px" }}>
+        <div
+          className="hidden md:flex items-center"
+          style={{ gap: "8px", flexShrink: 0, whiteSpace: "nowrap" }}
+        >
           <motion.a
             href="/audit"
             whileHover={{
@@ -178,6 +186,7 @@ const Navbar = () => {
               fontFamily: "var(--font-body, Inter, sans-serif)",
               letterSpacing: "-0.01em",
               whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
           >
             Audit my stack →
@@ -208,17 +217,22 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile dropdown — rendered in a portal-like fixed overlay, outside the nav */}
+      {/*
+        Mobile dropdown rendered as a FIXED sibling — NOT inside the nav.
+        The nav uses transform + maxWidth + overflow:visible which causes
+        child dropdowns to be clipped or mispositioned on mobile.
+        Moving it here gives it its own clean fixed stacking context.
+      */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.97 }}
+            initial={{ opacity: 0, y: -12, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            exit={{ opacity: 0, y: -12, scale: 0.97 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
             style={{
               position: "fixed",
-              top: isScrolled ? "88px" : "72px",
+              top: isScrolled ? "88px" : "76px",
               left: "1rem",
               right: "1rem",
               backgroundColor: "rgba(250,249,247,0.98)",
