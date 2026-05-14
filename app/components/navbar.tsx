@@ -64,9 +64,9 @@ const Navbar = () => {
       style={{
         position: "fixed",
         zIndex: 1000,
-        display: "grid",
-        gridTemplateColumns: "1fr auto 1fr",
+        display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         backdropFilter: isScrolled ? "blur(16px)" : "none",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "none",
         left: "50%",
@@ -125,11 +125,13 @@ const Navbar = () => {
         style={{
           listStyle: "none",
           gap: "2px",
-          margin: 0,
+          margin: "0 auto",
           padding: 0,
           flexShrink: 0,
           whiteSpace: "nowrap",
-          justifyContent: "center",
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
         }}
       >
         {navLinks.map((item) => (
@@ -162,12 +164,7 @@ const Navbar = () => {
       {/* CTA */}
       <div
         className="hidden md:flex items-center"
-        style={{
-          gap: "8px",
-          flexShrink: 0,
-          whiteSpace: "nowrap",
-          justifyContent: "flex-end",
-        }}
+        style={{ gap: "8px", flexShrink: 0, whiteSpace: "nowrap" }}
       >
         <motion.a
           href="/audit"
