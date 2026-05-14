@@ -162,7 +162,7 @@ function HeroCard() {
       initial={{ opacity: 0, y: 48, filter: "blur(6px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ duration: 1, delay: 0.35, ease }}
-      className="w-full max-w-[640px] mx-auto mt-20"
+      className="w-full max-w-[640px] mx-auto mt-16 px-0"
     >
       <div className="relative">
         <div
@@ -181,7 +181,7 @@ function HeroCard() {
           }}
         >
           <div
-            className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100/80"
+            className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-zinc-100/80"
             style={{ background: "rgba(249,249,247,0.8)" }}
           >
             <div className="flex gap-1.5">
@@ -213,28 +213,30 @@ function HeroCard() {
                 transition={{ delay: 0.5 + i * 0.08, duration: 0.5, ease }}
                 onHoverStart={() => setHovered(i)}
                 onHoverEnd={() => setHovered(null)}
-                className="flex items-center justify-between px-5 py-4 transition-colors duration-200 cursor-default"
+                className="flex items-center justify-between px-4 sm:px-5 py-3.5 transition-colors duration-200 cursor-default"
                 style={{
                   background:
                     hovered === i ? "rgba(8,104,65,0.035)" : "transparent",
                 }}
               >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-zinc-100 shadow-sm shrink-0">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white border border-zinc-100 shadow-sm shrink-0">
                     <img
                       src={t.image}
                       alt={t.name}
-                      className="w-5 h-5 object-contain"
+                      className="w-4 h-4 object-contain"
                     />
                   </div>
-                  <div>
-                    <p className="text-[13px] font-semibold text-zinc-900 leading-none mb-1">
+                  <div className="min-w-0">
+                    <p className="text-[13px] font-semibold text-zinc-900 leading-none mb-1 truncate">
                       {t.name}
                     </p>
-                    <p className="text-[11px] text-zinc-400">{t.plan}</p>
+                    <p className="text-[11px] text-zinc-400 truncate">
+                      {t.plan}
+                    </p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right shrink-0 ml-3">
                   <p className="text-[13px] font-semibold text-zinc-900 font-mono">
                     {t.spend}
                   </p>
@@ -267,10 +269,10 @@ function StatCell({
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1, ease }}
-      className="text-center py-16 px-8"
+      className="text-center py-12 px-8"
     >
       <p
-        className="text-[52px] font-light leading-none mb-3 tracking-tight text-zinc-900"
+        className="text-[44px] sm:text-[52px] font-light leading-none mb-3 tracking-tight text-zinc-900"
         style={{ fontFamily: "'DM Serif Display', serif" }}
       >
         {value}
@@ -345,7 +347,7 @@ function HowItWorksHeading() {
         How it works
       </p>
       <h2
-        className="text-[42px] leading-[1.05] tracking-tight text-zinc-900 mb-5"
+        className="text-[36px] sm:text-[42px] leading-[1.05] tracking-tight text-zinc-900 mb-5"
         style={{ fontFamily: "'DM Serif Display', serif" }}
       >
         Identify waste in minutes.
@@ -371,7 +373,7 @@ function AuditHeading() {
         Sample audit
       </p>
       <h2
-        className="text-[42px] leading-[1.05] tracking-tight text-zinc-900 mb-5"
+        className="text-[36px] sm:text-[42px] leading-[1.05] tracking-tight text-zinc-900 mb-5"
         style={{ fontFamily: "'DM Serif Display', serif" }}
       >
         Actionable intelligence.
@@ -392,7 +394,7 @@ function CTASection() {
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease }}
-      className="rounded-3xl px-10 py-24 text-center relative overflow-hidden border border-[#086841]/15 shadow-xl shadow-[#086841]/5"
+      className="rounded-3xl px-6 sm:px-10 py-20 sm:py-24 text-center relative overflow-hidden border border-[#086841]/15 shadow-xl shadow-[#086841]/5"
       style={{ background: "#061a0e" }}
     >
       <div
@@ -414,7 +416,7 @@ function CTASection() {
           For Engineering Leaders
         </p>
         <h2
-          className="text-[52px] leading-[1.0] tracking-[-0.02em] text-[#f5f4f0] mb-6"
+          className="text-[40px] sm:text-[52px] leading-[1.0] tracking-[-0.02em] text-[#f5f4f0] mb-6"
           style={{ fontFamily: "'DM Serif Display', serif" }}
         >
           Optimize your stack today.
@@ -444,75 +446,140 @@ function CTASection() {
   );
 }
 
+// Mobile card view for each tool row
+function AuditCard({
+  tool,
+  index,
+  inView,
+}: {
+  tool: (typeof TOOLS)[number];
+  index: number;
+  inView: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.1 + index * 0.08, duration: 0.4 }}
+      className="bg-white/90 rounded-xl border border-zinc-100 p-4 shadow-sm"
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white border border-zinc-100 shadow-sm">
+            <img
+              src={tool.image}
+              alt={tool.name}
+              className="w-4 h-4 object-contain"
+            />
+          </div>
+          <div>
+            <p className="text-[13px] font-semibold text-zinc-900">
+              {tool.name}
+            </p>
+            <p className="text-[11px] text-zinc-400">
+              {tool.plan.split("·")[0].trim()}
+            </p>
+          </div>
+        </div>
+        <div className="text-right">
+          <p className="text-[14px] font-bold text-zinc-900 font-mono">
+            {tool.spend}
+          </p>
+          <p className="text-[11px] font-bold text-[#086841] font-mono">
+            {tool.savings}
+          </p>
+        </div>
+      </div>
+      <div className="bg-[#086841]/5 rounded-lg px-3 py-2">
+        <p className="text-[11px] text-zinc-500">
+          <span className="font-semibold text-[#086841]">Action: </span>
+          {tool.rec}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 function AuditTable() {
   const [ref, inView] = useReveal(0.1);
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease }}
-      className="mt-14 rounded-2xl overflow-hidden border border-zinc-200/80 bg-white/80"
-      style={{
-        backdropFilter: "blur(16px)",
-        boxShadow:
-          "0 8px 40px -8px rgba(8,104,65,0.07), 0 2px 8px rgba(0,0,0,0.03)",
-      }}
-    >
-      <table className="w-full text-[13px] border-collapse">
-        <thead>
-          <tr
-            className="border-b border-zinc-100/80"
-            style={{ background: "rgba(249,249,247,0.9)" }}
-          >
-            {[
-              "Service",
-              "Plan",
-              "Monthly Spend",
-              "Action Required",
-              "Impact",
-            ].map((h, i) => (
-              <th
-                key={h}
-                className={`px-6 py-4 text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400 text-left ${i === 4 ? "text-right" : ""}`}
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {TOOLS.map((t, i) => (
-            <motion.tr
-              key={t.name}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.15 + i * 0.08, duration: 0.4 }}
-              className="border-b border-zinc-50 hover:bg-[#086841]/[0.025] transition-colors duration-150"
+    <div ref={ref} className="mt-14">
+      {/* Desktop table */}
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease }}
+        className="hidden md:block rounded-2xl overflow-hidden border border-zinc-200/80 bg-white/80"
+        style={{
+          backdropFilter: "blur(16px)",
+          boxShadow:
+            "0 8px 40px -8px rgba(8,104,65,0.07), 0 2px 8px rgba(0,0,0,0.03)",
+        }}
+      >
+        <table className="w-full text-[13px] border-collapse">
+          <thead>
+            <tr
+              className="border-b border-zinc-100/80"
+              style={{ background: "rgba(249,249,247,0.9)" }}
             >
-              <td className="px-6 py-4 font-semibold text-zinc-900 flex items-center gap-3">
-                <div className="w-7 h-7 rounded bg-white border border-zinc-100 shadow-sm flex items-center justify-center shrink-0">
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    className="w-4 h-4 object-contain"
-                  />
-                </div>
-                {t.name}
-              </td>
-              <td className="px-6 py-4 text-zinc-400">
-                {t.plan.split("·")[0].trim()}
-              </td>
-              <td className="px-6 py-4 text-zinc-900 font-mono">{t.spend}</td>
-              <td className="px-6 py-4 text-zinc-400">{t.rec}</td>
-              <td className="px-6 py-4 text-right font-bold text-[#086841] font-mono">
-                {t.savings}
-              </td>
-            </motion.tr>
-          ))}
-        </tbody>
-      </table>
-    </motion.div>
+              {[
+                "Service",
+                "Plan",
+                "Monthly Spend",
+                "Action Required",
+                "Impact",
+              ].map((h, i) => (
+                <th
+                  key={h}
+                  className={`px-6 py-4 text-[10px] font-bold tracking-[0.18em] uppercase text-zinc-400 text-left ${i === 4 ? "text-right" : ""}`}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {TOOLS.map((t, i) => (
+              <motion.tr
+                key={t.name}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.15 + i * 0.08, duration: 0.4 }}
+                className="border-b border-zinc-50 hover:bg-[#086841]/[0.025] transition-colors duration-150"
+              >
+                <td className="px-6 py-4 font-semibold text-zinc-900">
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded bg-white border border-zinc-100 shadow-sm flex items-center justify-center shrink-0">
+                      <img
+                        src={t.image}
+                        alt={t.name}
+                        className="w-4 h-4 object-contain"
+                      />
+                    </div>
+                    {t.name}
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-zinc-400">
+                  {t.plan.split("·")[0].trim()}
+                </td>
+                <td className="px-6 py-4 text-zinc-900 font-mono">{t.spend}</td>
+                <td className="px-6 py-4 text-zinc-400">{t.rec}</td>
+                <td className="px-6 py-4 text-right font-bold text-[#086841] font-mono">
+                  {t.savings}
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </motion.div>
+
+      {/* Mobile cards */}
+      <div className="flex md:hidden flex-col gap-3">
+        {TOOLS.map((t, i) => (
+          <AuditCard key={t.name} tool={t} index={i} inView={inView} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -556,7 +623,7 @@ export default function BurnRatePage() {
       />
 
       <div className="relative z-10">
-        <section className="pt-38 pb-24 px-6 max-w-5xl mx-auto relative">
+        <section className="pt-32 sm:pt-38 pb-24 px-5 max-w-5xl mx-auto relative">
           <FloatingBadges />
 
           <div className="text-center relative z-10">
@@ -564,8 +631,11 @@ export default function BurnRatePage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.1, ease }}
-              className="text-[68px] md:text-[88px] leading-[0.95] tracking-[-0.03em] text-zinc-900 max-w-[820px] mx-auto mb-8"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
+              className="leading-[0.95] tracking-[-0.03em] text-zinc-900 max-w-[820px] mx-auto mb-7"
+              style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: "clamp(38px, 8vw, 88px)",
+              }}
             >
               Stop overpaying for your{" "}
               <span className="text-[#086841] italic relative">
@@ -591,7 +661,7 @@ export default function BurnRatePage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.18, ease }}
-              className="text-[17px] text-zinc-500 max-w-[480px] mx-auto mb-12 leading-relaxed font-normal"
+              className="text-[15px] sm:text-[17px] text-zinc-500 max-w-[480px] mx-auto mb-10 leading-relaxed font-normal px-2"
             >
               The definitive platform for engineering leaders to discover unused
               licenses, consolidate overlapping tools, and reduce monthly SaaS
@@ -602,7 +672,7 @@ export default function BurnRatePage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.26, ease }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 px-2"
             >
               <Link
                 href="/audit"
@@ -628,7 +698,7 @@ export default function BurnRatePage() {
         <Ticker />
 
         <section className="border-b border-zinc-200/50 bg-white/40">
-          <div className="max-w-5xl mx-auto px-6">
+          <div className="max-w-5xl mx-auto px-5">
             <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-zinc-200/50">
               {STATS.map((s, i) => (
                 <StatCell key={s.value} {...s} index={i} />
@@ -641,7 +711,7 @@ export default function BurnRatePage() {
           id="how-it-works"
           className="border-b border-zinc-200/50 bg-[#fcfcfc]"
         >
-          <div className="max-w-5xl mx-auto px-6 py-28">
+          <div className="max-w-5xl mx-auto px-5 py-20 sm:py-28">
             <HowItWorksHeading />
 
             <div className="grid grid-cols-1 md:grid-cols-3 border-t border-zinc-200/60 pt-2">
@@ -657,18 +727,21 @@ export default function BurnRatePage() {
           className="border-b border-zinc-200/50"
           style={{ background: "rgba(8,104,65,0.015)" }}
         >
-          <div className="max-w-5xl mx-auto px-6 py-28">
+          <div className="max-w-5xl mx-auto px-5 py-20 sm:py-28">
             <AuditHeading />
             <AuditTable />
           </div>
         </section>
 
-        <section id="for-ctos" className="max-w-5xl mx-auto px-6 py-28">
+        <section
+          id="for-ctos"
+          className="max-w-5xl mx-auto px-5 py-20 sm:py-28"
+        >
           <CTASection />
         </section>
 
         <footer className="border-t border-zinc-200/50 bg-[#fcfcfc]">
-          <div className="max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="max-w-5xl mx-auto px-5 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
             <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-zinc-400/60">
               BurnRate.ai
             </span>

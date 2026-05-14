@@ -32,9 +32,9 @@ const Navbar = () => {
   const navVariants = {
     initial: {
       width: "100%",
-      paddingLeft: "3rem",
-      paddingRight: "3rem",
-      height: "72px",
+      paddingLeft: "1.5rem",
+      paddingRight: "1.5rem",
+      height: "64px",
       borderRadius: "0px",
       backgroundColor: "rgba(245, 244, 240, 0.0)",
       border: "1px solid transparent",
@@ -56,179 +56,171 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
-      initial="initial"
-      animate={isScrolled ? "scrolled" : "initial"}
-      variants={navVariants}
-      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-      style={{
-        position: "fixed",
-        zIndex: 1000,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backdropFilter: isScrolled ? "blur(16px)" : "none",
-        WebkitBackdropFilter: isScrolled ? "blur(16px)" : "none",
-        left: "50%",
-        transform: "translateX(-50%)",
-        overflow: "visible",
-        maxWidth: "90vw",
-      }}
-    >
-      <AnimatePresence>
-        {!isScrolled && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: "3rem",
-              right: "3rem",
-              height: "1px",
-              background:
-                "linear-gradient(90deg, transparent, rgba(8,104,65,0.15), transparent)",
-            }}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Logo */}
-      <Link
-        href="/"
+    <>
+      <motion.nav
+        initial="initial"
+        animate={isScrolled ? "scrolled" : "initial"}
+        variants={navVariants}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         style={{
+          position: "fixed",
+          zIndex: 1000,
           display: "flex",
           alignItems: "center",
-          textDecoration: "none",
-          flexShrink: 0,
-          whiteSpace: "nowrap",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "17px",
-            fontWeight: 700,
-            color: "#086841",
-            letterSpacing: "-0.03em",
-            fontFamily: "var(--font-body, Inter, sans-serif)",
-          }}
-        >
-          BurnRate
-        </span>
-      </Link>
-
-      {/* Center nav links */}
-      <ul
-        className="hidden md:flex"
-        style={{
-          listStyle: "none",
-          gap: "2px",
-          margin: "0 auto",
-          padding: 0,
-          flexShrink: 0,
-          whiteSpace: "nowrap",
-          position: "absolute",
+          justifyContent: "space-between",
+          backdropFilter: isScrolled ? "blur(16px)" : "none",
+          WebkitBackdropFilter: isScrolled ? "blur(16px)" : "none",
           left: "50%",
           transform: "translateX(-50%)",
+          maxWidth: "min(680px, 92vw)",
         }}
       >
-        {navLinks.map((item) => (
-          <li key={item.label} style={{ flexShrink: 0 }}>
-            <motion.a
-              href={item.href}
-              whileHover={{
-                color: "#086841",
-                backgroundColor: "rgba(8,104,65,0.06)",
-              }}
+        <AnimatePresence>
+          {!isScrolled && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
               style={{
-                display: "inline-block",
-                padding: "6px 12px",
-                fontSize: "13.5px",
-                fontWeight: 500,
-                color: "#52525b",
-                textDecoration: "none",
-                borderRadius: "8px",
-                fontFamily: "var(--font-body, Inter, sans-serif)",
-                letterSpacing: "-0.01em",
-                whiteSpace: "nowrap",
+                position: "absolute",
+                bottom: 0,
+                left: "1.5rem",
+                right: "1.5rem",
+                height: "1px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(8,104,65,0.15), transparent)",
               }}
-            >
-              {item.label}
-            </motion.a>
-          </li>
-        ))}
-      </ul>
+            />
+          )}
+        </AnimatePresence>
 
-      {/* CTA */}
-      <div
-        className="hidden md:flex items-center"
-        style={{ gap: "8px", flexShrink: 0, whiteSpace: "nowrap" }}
-      >
-        <motion.a
-          href="/audit"
-          whileHover={{
-            backgroundColor: "#065733",
-            boxShadow: "0 4px 16px rgba(8,104,65,0.28)",
-          }}
-          whileTap={{ scale: 0.97 }}
+        {/* Logo */}
+        <Link
+          href="/"
           style={{
-            padding: "8px 18px",
-            backgroundColor: "#086841",
-            color: "#ffffff",
-            borderRadius: "8px",
-            fontSize: "13.5px",
-            fontWeight: 600,
+            display: "flex",
+            alignItems: "center",
             textDecoration: "none",
-            fontFamily: "var(--font-body, Inter, sans-serif)",
-            letterSpacing: "-0.01em",
-            whiteSpace: "nowrap",
             flexShrink: 0,
           }}
         >
-          Audit my stack →
-        </motion.a>
-      </div>
+          <span
+            style={{
+              fontSize: "17px",
+              fontWeight: 700,
+              color: "#086841",
+              letterSpacing: "-0.03em",
+              fontFamily: "var(--font-body, Inter, sans-serif)",
+            }}
+          >
+            BurnRate
+          </span>
+        </Link>
 
-      {/* Mobile hamburger */}
-      <div className="flex md:hidden items-center">
-        <motion.button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          whileTap={{ scale: 0.94 }}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+        {/* Center nav links — desktop only */}
+        <ul
+          className="hidden md:flex"
           style={{
-            background: "none",
-            border: "1px solid rgba(8,104,65,0.2)",
-            borderRadius: "8px",
-            color: "#086841",
-            fontSize: "18px",
-            cursor: "pointer",
-            padding: "6px 8px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            listStyle: "none",
+            gap: "2px",
+            margin: 0,
+            padding: 0,
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
-          {isMobileMenuOpen ? <FiX /> : <FiMenu />}
-        </motion.button>
-      </div>
+          {navLinks.map((item) => (
+            <li key={item.label}>
+              <motion.a
+                href={item.href}
+                whileHover={{
+                  color: "#086841",
+                  backgroundColor: "rgba(8,104,65,0.06)",
+                }}
+                style={{
+                  display: "inline-block",
+                  padding: "6px 12px",
+                  fontSize: "13.5px",
+                  fontWeight: 500,
+                  color: "#52525b",
+                  textDecoration: "none",
+                  borderRadius: "8px",
+                  fontFamily: "var(--font-body, Inter, sans-serif)",
+                  letterSpacing: "-0.01em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.label}
+              </motion.a>
+            </li>
+          ))}
+        </ul>
 
-      {/* Mobile menu */}
+        {/* CTA — desktop only */}
+        <div className="hidden md:flex items-center" style={{ gap: "8px" }}>
+          <motion.a
+            href="/audit"
+            whileHover={{
+              backgroundColor: "#065733",
+              boxShadow: "0 4px 16px rgba(8,104,65,0.28)",
+            }}
+            whileTap={{ scale: 0.97 }}
+            style={{
+              padding: "8px 18px",
+              backgroundColor: "#086841",
+              color: "#ffffff",
+              borderRadius: "8px",
+              fontSize: "13.5px",
+              fontWeight: 600,
+              textDecoration: "none",
+              fontFamily: "var(--font-body, Inter, sans-serif)",
+              letterSpacing: "-0.01em",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Audit my stack →
+          </motion.a>
+        </div>
+
+        {/* Mobile hamburger */}
+        <div className="flex md:hidden items-center">
+          <motion.button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            whileTap={{ scale: 0.94 }}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            style={{
+              background: "none",
+              border: "1px solid rgba(8,104,65,0.2)",
+              borderRadius: "8px",
+              color: "#086841",
+              fontSize: "18px",
+              cursor: "pointer",
+              padding: "6px 8px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+          </motion.button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile dropdown — rendered in a portal-like fixed overlay, outside the nav */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12, scale: 0.97 }}
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.97 }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
             style={{
-              position: "absolute",
-              top: isScrolled ? "68px" : "76px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "calc(100vw - 2rem)",
-              maxWidth: "360px",
+              position: "fixed",
+              top: isScrolled ? "88px" : "72px",
+              left: "1rem",
+              right: "1rem",
               backgroundColor: "rgba(250,249,247,0.98)",
               backdropFilter: "blur(16px)",
               WebkitBackdropFilter: "blur(16px)",
@@ -305,7 +297,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 };
 
